@@ -18,7 +18,7 @@ var optimist = require('optimist')
   .alias('a', 'all')
   .default({
     level: 0,
-    hash: 'sha1'
+    hash: 'xxhash_64'
   })
   ;
 

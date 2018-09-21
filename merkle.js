@@ -1,5 +1,7 @@
 
 var crypto = require('crypto');
+var xxhash = require('xxhashjs');
+
 var through = require('through');
 
 var REGEXP = {
@@ -9,6 +11,8 @@ var REGEXP = {
   'sha256':    "^[0-9a-f]{64}$",
   'sha512':    "^[0-9a-f]{128}$",
   'whirlpool': "^[0-9a-f]{128}$",
+  'xxhash_32': "^[0-9a-f]{8}$",
+  'xxhash_64': "^[0-9a-f]{16}$",
   'DEFAULT':   "^$"
 };
 
@@ -228,6 +232,12 @@ module.exports = function (hashFuncName, useUpperCaseForHash) {
   return new Merkle(function (input) {
     if (hashFuncName === 'none') {
       return input;
+    } else if (hashFuncName === 'xxhash_32') {
+      var hash = xxhash.h32(0);	// seed = 0x0
+      return hash.update(input).digest().toString(16);
+    } else if (hashFuncName === 'xxhash_64') {
+      var hash = xxhash.h64(0);
+      return hash.update(input).digest().toString(16);
     } else {
       var hash = crypto.createHash(hashFuncName);
       return hash.update(input).digest('hex');
