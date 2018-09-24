@@ -1,6 +1,7 @@
 
 var crypto = require('crypto');
 var xxhash = require('xxhashjs');
+const SHA3 = require('sha3')
 
 var through = require('through');
 
@@ -238,6 +239,11 @@ module.exports = function (hashFuncName, useUpperCaseForHash) {
     } else if (hashFuncName === 'xxhash_64') {
       var hash = xxhash.h64(0);
       return hash.update(input).digest().toString(16);
+    } else if (hashFuncName === 'sha3d') {
+      var hash1 = SHA3(256)
+      var first = hash1.update(input).digest('binary');
+      var hash2 = SHA3(256)
+      return hash2.update(first).digest('binary');
     } else {
       var hash = crypto.createHash(hashFuncName);
       return hash.update(input).digest('hex');

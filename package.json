@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "optimist": "0.6.1",
+    "sha3": "^1.2.2",
     "through": "2.3.6",
     "xxhashjs": "0.2.2"
   },
