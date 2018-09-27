@@ -12,6 +12,7 @@ var REGEXP = {
   'sha256':    "^[0-9a-f]{64}$",
   'sha512':    "^[0-9a-f]{128}$",
   'whirlpool': "^[0-9a-f]{128}$",
+  'sha3d_256': "^[0-9a-f]{64}$",
   'xxhash_32': "^[0-9a-f]{8}$",
   'xxhash_64': "^[0-9a-f]{16}$",
   'DEFAULT':   "^$"
@@ -239,7 +240,7 @@ module.exports = function (hashFuncName, useUpperCaseForHash) {
     } else if (hashFuncName === 'xxhash_64') {
       var hash = xxhash.h64(0);
       return hash.update(input).digest().toString(16);
-    } else if (hashFuncName === 'sha3d') {
+    } else if (hashFuncName === 'sha3d_256') {
       var hash1 = SHA3(256)
       var first = hash1.update(input).digest('binary');
       var hash2 = SHA3(256)
