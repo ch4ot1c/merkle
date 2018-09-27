@@ -241,10 +241,10 @@ module.exports = function (hashFuncName, useUpperCaseForHash) {
       var hash = xxhash.h64(0);
       return hash.update(input).digest().toString(16);
     } else if (hashFuncName === 'sha3d_256') {
-      var hash1 = SHA3(256)
-      var first = hash1.update(input).digest('binary');
-      var hash2 = SHA3(256)
-      return hash2.update(first).digest('binary');
+      var hash1 = new SHA3.SHA3Hash(256)
+      var first = hash1.update(input, 'hex').digest('hex');
+      var hash2 = new SHA3.SHA3Hash(256)
+      return hash2.update(first, 'hex').digest('hex');
     } else {
       var hash = crypto.createHash(hashFuncName);
       return hash.update(input).digest('hex');
